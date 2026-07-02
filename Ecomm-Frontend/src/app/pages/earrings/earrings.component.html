@@ -114,62 +114,16 @@
 
           </div>
 
-         <!-- BUTTONS -->
-<div class="mt-6 flex gap-3">
-
-  <!-- ADD TO CART / QUANTITY STEPPER -->
-  <div class="flex-1">
-
-    <button
-      *ngIf="earring.quantity === 0"
-      (click)="addToCart(earring)"
-      class="w-full bg-[#6b3e38]
-             text-pink-100 py-3 rounded-2xl
-             font-semibold hover:bg-[#7d4a43]
-             hover:scale-105 transition duration-300 shadow-lg">
-      Add To Cart
-    </button>
-
-    <div
-      *ngIf="earring.quantity > 0"
-      class="w-full flex items-center justify-between
-             bg-[#6b3e38] text-pink-100
-             py-2 px-4 rounded-2xl shadow-lg">
-
-      <button
-        (click)="decreaseQty(earring)"
-        class="w-8 h-8 flex items-center justify-center
-               rounded-full bg-pink-100/20 hover:bg-pink-100/40
-               font-bold text-lg transition">
-        −
-      </button>
-
-      <span class="font-semibold">{{ earring.quantity }}</span>
-
-      <button
-        (click)="increaseQty(earring)"
-        class="w-8 h-8 flex items-center justify-center
-               rounded-full bg-pink-100/20 hover:bg-pink-100/40
-               font-bold text-lg transition">
-        +
-      </button>
-
-    </div>
-
-  </div>
-
-  <!-- WISHLIST -->
-  <button
-    (click)="toggleWishlist(earring)"
-    class="w-14 rounded-2xl border border-pink-200
-           hover:bg-pink-200 transition
-           flex items-center justify-center text-xl"
-    [class.bg-pink-100]="!earring.wishlistId"
-    [class.bg-pink-300]="earring.wishlistId">
-    {{ earring.wishlistId ? '❤️' : '🤍' }}
-  </button>
-
-</div>
+          <!-- WISHLIST -->
+          <button
+            (click)="toggleWishlist(earring)"
+            class="w-14 rounded-2xl border border-pink-200
+                   hover:bg-pink-200 transition
+                   flex items-center justify-center text-xl"
+            [class.bg-pink-100]="!earring.wishlistId"
+            [class.bg-pink-300]="earring.wishlistId">
+            {{ earring.wishlistId ? '❤️' : '🤍' }}
+          </button>
 
         </div>
 

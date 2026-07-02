@@ -1,39 +1,48 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { WishlistService } from '../../services/wishlist.service';
 
-@Injectable({
-  providedIn: 'root'
+@Component({
+  selector: 'app-wishlist',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  templateUrl: './wishlist.component.html',
+  styleUrl: './wishlist.component.scss'
 })
-export class  WishlistComponent {
+export class WishlistComponent implements OnInit {
 
-  constructor(private http: HttpClient,private service:AuthService) { }
+  wishlistItems: any[] = [];
 
-  private baseUrl = "http://localhost:8080/wishlist";
+  constructor(private wishlistService: WishlistService) {}
 
-  // LIVE WISHLIST COUNT
-  wishlistCount = new BehaviorSubject<number>(0);
-
-  updateWishlistCount(count: number) {
-    this.wishlistCount.next(count);
+  ngOnInit(): void {
+    this.loadWishlistItems();
   }
 
-  addToWishlist(product:any) {
-    const userId=this.service.getUserId();
-    const productWithUser = {
-    ...product,                     
-    userId: userId                   
-  };
-    return this.http.post(`${this.baseUrl}/add`, productWithUser);
+  loadWishlistItems() {
+    this.wishlistService.getWishlistItems().subscribe({
+      next: (res: any) => {
+        this.wishlistItems = res.data;
+        this.wishlistService.updateWishlistCount(
+          this.wishlistItems.length
+        );
+      },
+      error: (err) => console.error('Failed to load wishlist:', err)
+    });
   }
 
-  getWishlistItems() {
-    const userId=this.service.getUserId();
-    return this.http.get(`${this.baseUrl}/all/${userId}`);
-  }
-
-  deleteWishlistItem(id:number) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+  removeWishlistItem(id: number) {
+    this.wishlistService.deleteWishlistItem(id).subscribe({
+      next: () => {
+        this.wishlistItems = this.wishlistItems.filter(
+          item => item.id !== id
+        );
+        this.wishlistService.updateWishlistCount(
+          this.wishlistItems.length
+        );
+      },
+      error: (err) => console.error('Failed to remove:', err)
+    });
   }
 }

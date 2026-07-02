@@ -1,5 +1,5 @@
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
@@ -12,14 +12,31 @@ import { Product } from '../../models/product.model';
   templateUrl: './luxury-sets.component.html',
   styleUrl: './luxury-sets.component.scss'
 })
-export class LuxurySetsComponent {
+export class LuxurySetsComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
     private wishlistService: WishlistService
   ) {}
 
-  luxurySets:Product[]= [
+  ngOnInit(): void {
+    this.cartService.getCartItems().subscribe({
+      next: (res: any) => {
+        const cartItems = res.data;
+        this.luxurySets.forEach(luxury => {
+          const cartItem = cartItems.find(
+            (cart: any) => cart.productId === luxury.id
+          );
+          if (cartItem) {
+            luxury.cartId = cartItem.id;
+            luxury.quantity = cartItem.quantity;
+          }
+        });
+      }
+    });
+  }
+
+  luxurySets: Product[] = [
     { id:1, name:'Royal Jewelry Set', price:29999, image:'assets/images/luxury-set/ls4.jpg', cartId: null, quantity: 0, wishlistId: null },
     { id:2, name:'Diamond Luxury Set', price:49999, image:'assets/images/luxury-set/ls3.jpg', cartId: null, quantity: 0, wishlistId: null },
     { id:3, name:'Wedding Luxury Set', price:39999, image:'assets/images/luxury-set/ls1.jpg', cartId: null, quantity: 0, wishlistId: null },
@@ -32,7 +49,7 @@ export class LuxurySetsComponent {
     { id:10, name:'Premium Wedding Set', price:69999, image:'assets/images/luxury-set/ls8.jpg', cartId: null, quantity: 0, wishlistId: null }
   ];
 
-  addToCart(luxury:Product) {
+  addToCart(luxury: Product) {
     const cartItem = {
       productId: luxury.id,
       productName: luxury.name,
@@ -54,43 +71,42 @@ export class LuxurySetsComponent {
     });
   }
 
-  increaseQty(luxury:Product) {
+  increaseQty(luxury: Product) {
     const newQty = luxury.quantity + 1;
-    if(luxury.cartId!==null){
-    this.cartService.updateQuantity(luxury.cartId, newQty).subscribe({
-      next: () => { luxury.quantity = newQty; },
-      error: (err) => console.error('Failed to update quantity:', err)
-    });
-  }
-  }
-
-  decreaseQty(luxury:Product) {
-    const newQty = luxury.quantity - 1;
-    if(luxury.cartId!==null){
-    if (newQty <= 0) {
-      this.cartService.deleteCartItem(luxury.cartId).subscribe({
-        next: () => {
-          luxury.cartId = null;
-          luxury.quantity = 0;
-          this.cartService.getCartItems().subscribe({
-            next: (cartRes: any) => {
-              this.cartService.updateCartCount(cartRes.data.length);
-            }
-          });
-        },
-        error: (err) => console.error('Failed to remove item:', err)
-      });
-    } else {
-      
+    if(luxury.cartId !== null){
       this.cartService.updateQuantity(luxury.cartId, newQty).subscribe({
         next: () => { luxury.quantity = newQty; },
-        error: (err) => console.error('Failed to update quantity:', err)
+        error: (err) => console.error('Failed:', err)
       });
-    }
     }
   }
 
-  toggleWishlist(luxury:Product) {
+  decreaseQty(luxury: Product) {
+    const newQty = luxury.quantity - 1;
+    if(luxury.cartId !== null){
+      if (newQty <= 0) {
+        this.cartService.deleteCartItem(luxury.cartId).subscribe({
+          next: () => {
+            luxury.cartId = null;
+            luxury.quantity = 0;
+            this.cartService.getCartItems().subscribe({
+              next: (cartRes: any) => {
+                this.cartService.updateCartCount(cartRes.data.length);
+              }
+            });
+          },
+          error: (err) => console.error('Failed to remove item:', err)
+        });
+      } else {
+        this.cartService.updateQuantity(luxury.cartId, newQty).subscribe({
+          next: () => { luxury.quantity = newQty; },
+          error: (err) => console.error('Failed:', err)
+        });
+      }
+    }
+  }
+
+  toggleWishlist(luxury: Product) {
     if (luxury.wishlistId) {
       this.wishlistService.deleteWishlistItem(luxury.wishlistId).subscribe({
         next: () => {
@@ -101,7 +117,7 @@ export class LuxurySetsComponent {
             }
           });
         },
-        error: (err) => console.error('Failed to remove from wishlist:', err)
+        error: (err) => console.error('Failed:', err)
       });
     } else {
       const wishlistItem = {
@@ -119,7 +135,7 @@ export class LuxurySetsComponent {
             }
           });
         },
-        error: (err) => console.error('Failed to add to wishlist:', err)
+        error: (err) => console.error('Failed:', err)
       });
     }
   }

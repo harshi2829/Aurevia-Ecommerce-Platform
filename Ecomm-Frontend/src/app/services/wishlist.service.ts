@@ -1,13 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WishlistService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
   private baseUrl = "http://localhost:8080/wishlist";
 
@@ -19,30 +23,23 @@ export class WishlistService {
   }
 
   // ADD TO WISHLIST
-  addToWishlist(product:any)
-  {
-    return this.http.post(
-      `${this.baseUrl}/add`,
-      product
-    );
+  addToWishlist(product: any) {
+    const userId = this.authService.getUserId();
+    const productWithUser = {
+      ...product,
+      userId: userId
+    };
+    return this.http.post(`${this.baseUrl}/add`, productWithUser);
   }
-
 
   // GET WISHLIST ITEMS
-  getWishlistItems()
-  {
-    return this.http.get(
-      `${this.baseUrl}/all`
-    );
+  getWishlistItems() {
+    const userId = this.authService.getUserId();
+    return this.http.get(`${this.baseUrl}/all/${userId}`);
   }
-
 
   // DELETE WISHLIST ITEM
-  deleteWishlistItem(id:number)
-  {
-    return this.http.delete(
-      `${this.baseUrl}/${id}`
-    );
+  deleteWishlistItem(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
-
 }

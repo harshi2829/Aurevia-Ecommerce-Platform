@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { Product } from '../../models/product.model';
+import {  OnInit } from '@angular/core';
 
 
 @Component({
@@ -14,13 +15,31 @@ import { Product } from '../../models/product.model';
   styleUrl: './rings.component.scss'
 })
 
-export class RingsComponent {
+export class RingsComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
     private cdr: ChangeDetectorRef,
     private wishlistService: WishlistService
   ) {}
+
+
+  ngOnInit(): void {
+    this.cartService.getCartItems().subscribe({
+      next: (res: any) => {
+        const cartItems = res.data;
+        this.rings.forEach(ring => {
+          const cartItem = cartItems.find(
+            (cart: any) => cart.productId === ring.id
+          );
+          if (cartItem) {
+            ring.cartId = cartItem.id;
+            ring.quantity = cartItem.quantity;
+          }
+        });
+      }
+    });
+  }
 
   showToast = false;
 

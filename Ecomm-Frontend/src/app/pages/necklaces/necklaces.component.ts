@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
@@ -14,12 +14,29 @@ import { Product } from '../../models/product.model';
 })
 
 
-export class NecklacesComponent {
+export class NecklacesComponent implements OnInit {
   
   constructor(
     private cartService: CartService,
     private wishlistService: WishlistService
   ) {}
+
+   ngOnInit(): void {
+    this.cartService.getCartItems().subscribe({
+      next: (res: any) => {
+        const cartItems = res.data;
+        this.necklaces.forEach(necklace => {
+          const cartItem = cartItems.find(
+            (cart: any) => cart.productId === necklace.id
+          );
+          if (cartItem) {
+            necklace.cartId = cartItem.id;
+            necklace.quantity = cartItem.quantity;
+          }
+        });
+      }
+    });
+  }
 
   necklaces:Product[]= [
     { id:1, name:'Gold Diamond Necklace', price:12999, image:'assets/images/rings/necklace/n1.jpg', cartId: null, quantity: 0, wishlistId: null },
