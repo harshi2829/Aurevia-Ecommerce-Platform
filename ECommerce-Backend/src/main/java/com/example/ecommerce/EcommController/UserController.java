@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {
+    "http://localhost:4200",
+    "https://aurevia-frontend-silk.vercel.app"
+})
 public class UserController {
 
   @Autowired

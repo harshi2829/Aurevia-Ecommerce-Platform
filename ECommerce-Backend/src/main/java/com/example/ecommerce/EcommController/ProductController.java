@@ -11,7 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {
+    "http://localhost:4200",
+    "https://aurevia-frontend-silk.vercel.app"
+})
 public class ProductController {
 
     @Autowired
