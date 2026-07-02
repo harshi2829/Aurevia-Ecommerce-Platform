@@ -107,58 +107,53 @@
         </div>
 
         <!-- PASSWORD -->
-        <div>
-          <input
-            type="password"
-            [(ngModel)]="myRegObj.password"
-            placeholder="Enter password (min 8 chars)"
-            [class.border-red-400]="passwordError"
-            [class.border-pink-200]="!passwordError"
-            class="w-full bg-white border rounded-2xl px-5 py-4
-                   outline-none focus:ring-2 focus:ring-pink-300
-                   text-[#6b3e38]"
-          />
-          <p *ngIf="passwordError"
-             class="mt-1 ml-2 text-red-500 text-sm font-medium">
-            {{ passwordError }}
-          </p>
+<div>
+  <input
+    type="password"
+    [(ngModel)]="myRegObj.password"
+    placeholder="Enter password (min 8 chars)"
+    [class.border-red-400]="passwordError"
+    [class.border-pink-200]="!passwordError"
+    class="w-full bg-white border rounded-2xl px-5 py-4
+           outline-none focus:ring-2 focus:ring-pink-300
+           text-[#6b3e38]"
+  />
+  <p *ngIf="passwordError"
+     class="mt-1 ml-2 text-red-500 text-sm font-medium">
+    {{ passwordError }}
+  </p>
 
-          <!-- Password strength indicator -->
-          <div class="mt-2 flex gap-1">
-            <div class="h-1 flex-1 rounded-full"
-                 [class.bg-red-400]="myRegObj.password.length > 0 && myRegObj.password.length < 8"
-                 [class.bg-yellow-400]="myRegObj.password.length >= 8 && myRegObj.password.length < 12"
-                 [class.bg-green-400]="myRegObj.password.length >= 12"
-                 [class.bg-pink-100]="!myRegObj.password.length">
-            </div>
-            <div class="h-1 flex-1 rounded-full"
-                 [class.bg-yellow-400]="myRegObj.password.length >= 8 && myRegObj.password.length < 12"
-                 [class.bg-green-400]="myRegObj.password.length >= 12"
-                 [class.bg-pink-100]="myRegObj.password.length < 8">
-            </div>
-            <div class="h-1 flex-1 rounded-full"
-                 [class.bg-green-400]="myRegObj.password.length >= 12"
-                 [class.bg-pink-100]="myRegObj.password.length < 12">
-            </div>
-          </div>
+  <!-- Password strength -->
+  <div class="mt-2 flex gap-1">
+    <div class="h-1 flex-1 rounded-full"
+         [ngClass]="{
+           'bg-red-400': myRegObj.password.length > 0 && myRegObj.password.length < 8,
+           'bg-yellow-400': myRegObj.password.length >= 8 && myRegObj.password.length < 12,
+           'bg-green-400': myRegObj.password.length >= 12,
+           'bg-pink-100': myRegObj.password.length === 0
+         }">
+    </div>
+    <div class="h-1 flex-1 rounded-full"
+         [ngClass]="{
+           'bg-yellow-400': myRegObj.password.length >= 8 && myRegObj.password.length < 12,
+           'bg-green-400': myRegObj.password.length >= 12,
+           'bg-pink-100': myRegObj.password.length < 8
+         }">
+    </div>
+    <div class="h-1 flex-1 rounded-full"
+         [ngClass]="{
+           'bg-green-400': myRegObj.password.length >= 12,
+           'bg-pink-100': myRegObj.password.length < 12
+         }">
+    </div>
+  </div>
 
-          <!-- Password hint -->
-          <p class="mt-1 ml-1 text-xs text-[#9b6b63]">
-            <span *ngIf="myRegObj.password.length >= 12">
-              Strong password! ✅
-            </span>
-            <span *ngIf="myRegObj.password.length >= 8 &&
-                         myRegObj.password.length < 12">
-              Good password
-            </span>
-            <span *ngIf="myRegObj.password.length > 0 &&
-                         myRegObj.password.length < 8">
-              Too short!
-            </span>
-          </p>
-        </div>
-
-      </div>
+  <p class="mt-1 ml-1 text-xs text-[#9b6b63]">
+    <span *ngIf="myRegObj.password.length >= 12">Strong password! ✅</span>
+    <span *ngIf="myRegObj.password.length >= 8 && myRegObj.password.length < 12">Good password</span>
+    <span *ngIf="myRegObj.password.length > 0 && myRegObj.password.length < 8">Too short!</span>
+  </p>
+</div>
 
       <!-- BUTTON -->
       <button
