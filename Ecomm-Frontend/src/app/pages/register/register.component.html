@@ -1,58 +1,68 @@
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-rose-100 to-pink-50 px-4 overflow-hidden relative">
+<div class="min-h-screen flex items-center justify-center
+            bg-gradient-to-br from-pink-100 via-rose-100
+            to-pink-50 px-4 overflow-hidden relative">
 
   <!-- TOAST -->
   <div *ngIf="showToast"
-       class="fixed top-5 right-5 px-6 py-3 rounded-2xl shadow-xl text-white font-semibold z-50 transition-all duration-300"
+       class="fixed top-5 right-5 px-6 py-3 rounded-2xl
+              shadow-xl text-white font-semibold z-50
+              transition-all duration-300"
        [ngClass]="{
          'bg-green-500': toastType === 'success',
          'bg-red-500': toastType === 'error'
        }">
-
     {{ toastMessage }}
-
   </div>
 
   <!-- BLUR -->
-  <div class="absolute top-0 left-0 w-72 h-72 bg-pink-300/30 rounded-full blur-3xl"></div>
-  <div class="absolute bottom-0 right-0 w-72 h-72 bg-rose-200/40 rounded-full blur-3xl"></div>
+  <div class="absolute top-0 left-0 w-72 h-72
+              bg-pink-300/30 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 right-0 w-72 h-72
+              bg-rose-200/40 rounded-full blur-3xl"></div>
 
   <!-- CARD -->
-  <div
-    class="relative w-full max-w-5xl min-h-[620px] bg-white/70 backdrop-blur-2xl rounded-[2rem] shadow-2xl overflow-hidden border border-pink-200 flex animate-[fadeIn_0.5s_ease]"
-  >
+  <div class="relative w-full max-w-5xl min-h-[620px]
+              bg-white/70 backdrop-blur-2xl rounded-[2rem]
+              shadow-2xl overflow-hidden border border-pink-200
+              flex animate-[fadeIn_0.5s_ease]">
 
     <!-- LEFT -->
-    <div
-      class="hidden md:flex w-1/2 bg-[#6b3e38] text-pink-100 p-12 flex-col justify-center relative overflow-hidden"
-    >
-
-      <div class="absolute -bottom-10 -left-10 w-56 h-56 bg-pink-300/10 rounded-full blur-3xl"></div>
-
+    <div class="hidden md:flex w-1/2 bg-[#6b3e38]
+                text-pink-100 p-12 flex-col justify-center
+                relative overflow-hidden">
+      <div class="absolute -bottom-10 -left-10 w-56 h-56
+                  bg-pink-300/10 rounded-full blur-3xl"></div>
       <div class="relative z-10">
-
-        <div class="w-16 h-16 rounded-2xl bg-pink-100/10 border border-pink-100/20 flex items-center justify-center mb-6">
+        <div class="w-16 h-16 rounded-2xl bg-pink-100/10
+                    border border-pink-100/20 flex items-center
+                    justify-center mb-6">
           ✨
         </div>
-
         <h1 class="text-4xl font-black leading-tight">
           Create Account
         </h1>
-
         <p class="mt-5 text-pink-200 leading-7">
-          Join our jewelry platform and explore elegant handcrafted collections.
+          Join our jewelry platform and explore
+          elegant handcrafted collections.
         </p>
 
-      </div>
+        <!-- RULES -->
+        <div class="mt-8 space-y-2 text-pink-200 text-sm">
+          <p>✓ Username: 3-20 characters, no spaces</p>
+          <p>✓ Password: minimum 8 characters</p>
+          <p>✓ Valid email required</p>
+        </div>
 
+      </div>
     </div>
 
     <!-- RIGHT -->
-    <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+    <div class="w-full md:w-1/2 p-8 md:p-12
+                flex flex-col justify-center">
 
       <h2 class="text-4xl font-black text-[#6b3e38]">
         Register
       </h2>
-
       <p class="mt-2 text-[#9b6b63]">
         Create your new account
       </p>
@@ -61,42 +71,98 @@
       <div class="mt-10 space-y-5">
 
         <!-- USERNAME -->
-        <input
-          type="text"
-          [(ngModel)]="myRegObj.username"
-          placeholder="Enter username"
-          class="w-full bg-white border border-pink-200 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-pink-300 text-[#6b3e38]"
-        />
+        <div>
+          <input
+            type="text"
+            [(ngModel)]="myRegObj.username"
+            placeholder="Enter username (min 3 chars)"
+            [class.border-red-400]="usernameError"
+            [class.border-pink-200]="!usernameError"
+            class="w-full bg-white border rounded-2xl px-5 py-4
+                   outline-none focus:ring-2 focus:ring-pink-300
+                   text-[#6b3e38]"
+          />
+          <p *ngIf="usernameError"
+             class="mt-1 ml-2 text-red-500 text-sm font-medium">
+            {{ usernameError }}
+          </p>
+        </div>
 
         <!-- EMAIL -->
-        <input
-          type="email"
-          [(ngModel)]="myRegObj.email"
-          placeholder="Enter email"
-          class="w-full bg-white border border-pink-200 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-pink-300 text-[#6b3e38]"
-        />
+        <div>
+          <input
+            type="email"
+            [(ngModel)]="myRegObj.email"
+            placeholder="Enter email"
+            [class.border-red-400]="emailError"
+            [class.border-pink-200]="!emailError"
+            class="w-full bg-white border rounded-2xl px-5 py-4
+                   outline-none focus:ring-2 focus:ring-pink-300
+                   text-[#6b3e38]"
+          />
+          <p *ngIf="emailError"
+             class="mt-1 ml-2 text-red-500 text-sm font-medium">
+            {{ emailError }}
+          </p>
+        </div>
 
         <!-- PASSWORD -->
-        <input
-          type="password"
-          [(ngModel)]="myRegObj.password"
-          placeholder="Enter password"
-          class="w-full bg-white border border-pink-200 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-pink-300 text-[#6b3e38]"
-        />
+        <div>
+          <input
+            type="password"
+            [(ngModel)]="myRegObj.password"
+            placeholder="Enter password (min 8 chars)"
+            [class.border-red-400]="passwordError"
+            [class.border-pink-200]="!passwordError"
+            class="w-full bg-white border rounded-2xl px-5 py-4
+                   outline-none focus:ring-2 focus:ring-pink-300
+                   text-[#6b3e38]"
+          />
+          <p *ngIf="passwordError"
+             class="mt-1 ml-2 text-red-500 text-sm font-medium">
+            {{ passwordError }}
+          </p>
+
+          <!-- Password strength indicator -->
+          <div class="mt-2 flex gap-1">
+            <div class="h-1 flex-1 rounded-full"
+                 [class.bg-red-400]="myRegObj.password?.length > 0 && myRegObj.password?.length < 8"
+                 [class.bg-yellow-400]="myRegObj.password?.length >= 8 && myRegObj.password?.length < 12"
+                 [class.bg-green-400]="myRegObj.password?.length >= 12"
+                 [class.bg-pink-100]="!myRegObj.password?.length">
+            </div>
+            <div class="h-1 flex-1 rounded-full"
+                 [class.bg-yellow-400]="myRegObj.password?.length >= 8 && myRegObj.password?.length < 12"
+                 [class.bg-green-400]="myRegObj.password?.length >= 12"
+                 [class.bg-pink-100]="myRegObj.password?.length < 8">
+            </div>
+            <div class="h-1 flex-1 rounded-full"
+                 [class.bg-green-400]="myRegObj.password?.length >= 12"
+                 [class.bg-pink-100]="myRegObj.password?.length < 12">
+            </div>
+          </div>
+          <p class="mt-1 ml-1 text-xs text-[#9b6b63]">
+            <span *ngIf="myRegObj.password?.length >= 12">Strong password! ✅</span>
+            <span *ngIf="myRegObj.password?.length >= 8 && myRegObj.password?.length < 12">Good password</span>
+            <span *ngIf="myRegObj.password?.length > 0 && myRegObj.password?.length < 8">Too short!</span>
+          </p>
+        </div>
 
       </div>
 
       <!-- BUTTON -->
       <button
         (click)="onReg()"
-        class="mt-8 w-full bg-[#6b3e38] hover:bg-[#7d4a43] text-pink-100 py-4 rounded-2xl font-bold shadow-lg hover:scale-[1.01] active:scale-95 transition duration-300"
-      >
+        class="mt-8 w-full bg-[#6b3e38] hover:bg-[#7d4a43]
+               text-pink-100 py-4 rounded-2xl font-bold shadow-lg
+               hover:scale-[1.01] active:scale-95 transition duration-300">
         Create Account
       </button>
 
       <p class="text-center mt-6 text-[#9b6b63]">
         Already have an account?
-        <a routerLink="/login" class="font-bold text-[#6b3e38] hover:underline">
+        <a routerLink="/login"
+           class="font-bold text-[#6b3e38] hover:underline">
           Login
         </a>
       </p>
