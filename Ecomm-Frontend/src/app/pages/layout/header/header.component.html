@@ -1,0 +1,82 @@
+<header class="sticky top-0 z-50 bg-pink-50/95 backdrop-blur-md border-b border-pink-200/70">
+
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+
+    <div class="h-[72px] flex items-center justify-between gap-6">
+
+      <!-- LEFT -->
+      <div class="flex items-center gap-4">
+
+        <!-- MOBILE MENU -->
+        <button class="md:hidden p-2 rounded-xl hover:bg-pink-100 transition duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="w-5 h-5 text-[#6b3e38]">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+
+        <!-- LOGO -->
+        <div routerLink="/layout/home" class="flex items-center gap-3 cursor-pointer group">
+
+          <div class="w-10 h-10 rounded-full border-2 border-[#6b3e38] flex items-center justify-center group-hover:bg-[#6b3e38] transition duration-300">
+            <span class="font-serif text-lg font-bold text-[#6b3e38] group-hover:text-pink-50 transition duration-300">A</span>
+          </div>
+
+          <div class="hidden sm:block leading-none">
+            <h1 class="text-xl font-bold tracking-wide text-[#6b3e38]">AUREVIA</h1>
+            <p class="text-[10px] uppercase tracking-[0.3em] text-[#9b6b63] mt-0.5">Elegant Jewelry</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      
+
+      <!-- RIGHT -->
+      <div class="flex items-center gap-1 md:gap-2">
+
+        <a routerLink="/layout/home" class="hidden md:block px-3 py-2 text-sm text-[#6b3e38] hover:text-[#8b5a52] font-medium transition duration-200">
+          Home
+        </a>
+
+        <a routerLink="/layout/products" class="hidden md:block px-3 py-2 text-sm text-[#6b3e38] hover:text-[#8b5a52] font-medium transition duration-200">
+          Collections
+        </a>
+
+        <div class="w-px h-6 bg-pink-200 mx-1 hidden md:block"></div>
+
+        <!-- WISHLIST -->
+        <button routerLink="/layout/wishlist" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-pink-100 transition duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="#6b3e38" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 8.25c0-2.485-2.239-4.5-5-4.5-1.885 0-3.526.94-4.5 2.32-.974-1.38-2.615-2.32-4.5-2.32-2.761 0-5 2.015-5 4.5 0 7.22 9.5 11.25 9.5 11.25S21 15.47 21 8.25Z" />
+          </svg>
+          <span
+            *ngIf="wishlistCount > 0"
+            class="absolute top-0.5 right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#6b3e38] text-pink-50 text-[10px] font-semibold flex items-center justify-center">
+            {{ wishlistCount }}
+          </span>
+        </button>
+
+        <!-- CART -->
+        <button routerLink="/layout/cart" class="relative flex items-center gap-2 pl-3 pr-4 h-10 rounded-full bg-[#6b3e38] hover:bg-[#7d4a43] transition duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="w-5 h-5 text-pink-50">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386a1.125 1.125 0 0 1 1.11.97l.383 2.67M7.5 14.25a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm9 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-9-3h10.71a1.125 1.125 0 0 0 1.11-.888l1.547-7.734H5.106" />
+          </svg>
+          <span class="text-pink-50 text-sm font-semibold">{{ cartCount }}</span>
+        </button>
+
+       <!-- PROFILE -->
+<div
+  routerLink="/layout/profile"
+  [title]="username"
+  class="w-10 h-10 rounded-full bg-pink-100 border border-pink-200 text-[#6b3e38] flex items-center justify-center font-semibold text-sm cursor-pointer hover:bg-pink-200 transition duration-200">
+  {{ initials }}
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>

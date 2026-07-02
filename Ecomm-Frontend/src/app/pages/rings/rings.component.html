@@ -1,0 +1,171 @@
+<div class="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 p-6 md:p-10">
+
+  <!-- HEADER -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
+
+    <div>
+
+      <h1 class="text-4xl md:text-5xl font-black text-[#6b3e38]">
+        Rings Collection
+      </h1>
+
+      <p class="text-[#9b6b63] mt-2 text-lg">
+        Explore elegant gold, diamond, silver & platinum rings.
+      </p>
+
+    </div>
+
+    <!-- BACK BUTTON -->
+    <button
+      routerLink="/layout/home"
+      class="bg-[#6b3e38] text-pink-100 px-6 py-3 rounded-2xl
+             shadow-lg hover:scale-105 transition duration-300">
+
+      ← Back To Home
+
+    </button>
+
+  </div>
+  <!-- TOAST -->
+<div
+  *ngIf="showToast"
+  class="fixed top-[18px] left-1/2 -translate-x-1/2 z-[100]
+         bg-[#6b3e38] text-pink-100
+         px-6 py-3 rounded-2xl shadow-xl
+         transition-opacity duration-300">
+  ✅ Added to Cart!
+</div>
+
+  <!-- PRODUCTS -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+    <!-- CARD -->
+    <div
+      *ngFor="let ring of rings"
+      class="group bg-white/80 backdrop-blur-xl
+             rounded-[2rem] overflow-hidden
+             border border-pink-200 shadow-xl
+             hover:-translate-y-2 hover:shadow-2xl
+             transition duration-500">
+
+      <!-- IMAGE -->
+      <div class="relative overflow-hidden">
+
+        <img
+          [src]="ring.image"
+          class="h-[420px] w-full object-cover
+                 group-hover:scale-110
+                 transition duration-700"
+        />
+
+        <!-- BADGE -->
+        <div
+          class="absolute top-4 left-4
+                 bg-[#6b3e38] text-pink-100
+                 px-4 py-1 rounded-full
+                 text-sm font-semibold shadow-lg">
+
+          Premium Ring
+
+        </div>
+
+      </div>
+
+      <!-- CONTENT -->
+      <div class="p-6">
+
+        <!-- NAME -->
+        <h2 class="text-2xl font-black text-[#6b3e38]">
+          {{ ring.name }}
+        </h2>
+
+        <!-- DESCRIPTION -->
+        <p class="text-[#9b6b63] mt-3 leading-7">
+          Handcrafted luxury ring with premium finish and timeless elegance.
+        </p>
+
+        <!-- PRICE -->
+        <div class="mt-5 flex items-center justify-between">
+
+          <p class="text-3xl font-black text-[#6b3e38]">
+            ₹{{ ring.price }}
+          </p>
+
+          <div
+            class="bg-pink-100 text-[#6b3e38]
+                   px-3 py-1 rounded-full
+                   text-sm font-bold">
+
+            Bestseller
+
+          </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="mt-6 flex gap-3">
+
+          <!-- ADD TO CART -->
+        <!-- ADD TO CART / QUANTITY STEPPER -->
+<div class="flex-1">
+
+  <!-- Show this when NOT in cart -->
+  <button
+    *ngIf="ring.quantity === 0"
+    (click)="addToCart(ring)"
+    class="w-full bg-[#6b3e38]
+           text-pink-100 py-3 rounded-2xl
+           font-semibold hover:bg-[#7d4a43]
+           hover:scale-105 transition duration-300 shadow-lg">
+    🛒 Add To Cart
+  </button>
+
+  <!-- Show this when IN cart -->
+  <div
+    *ngIf="ring.quantity > 0"
+    class="w-full flex items-center justify-between
+           bg-[#6b3e38] text-pink-100
+           py-2 px-4 rounded-2xl shadow-lg">
+
+    <button
+      (click)="decreaseQty(ring)"
+      class="w-8 h-8 flex items-center justify-center
+             rounded-full bg-pink-100/20 hover:bg-pink-100/40
+             font-bold text-lg transition">
+      −
+    </button>
+
+    <span class="font-semibold">{{ ring.quantity }}</span>
+
+    <button
+      (click)="increaseQty(ring)"
+      class="w-8 h-8 flex items-center justify-center
+             rounded-full bg-pink-100/20 hover:bg-pink-100/40
+             font-bold text-lg transition">
+      +
+    </button>
+
+  </div>
+
+</div>
+
+          <!-- WISHLIST -->
+<button
+  (click)="toggleWishlist(ring)"
+  class="w-14 rounded-2xl border border-pink-200
+         hover:bg-pink-200 transition
+         flex items-center justify-center text-xl"
+  [class.bg-pink-100]="!ring.wishlistId"
+  [class.bg-pink-300]="ring.wishlistId">
+  {{ ring.wishlistId ? '❤️' : '🤍' }}
+</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

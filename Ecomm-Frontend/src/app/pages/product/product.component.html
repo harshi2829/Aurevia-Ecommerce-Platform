@@ -1,0 +1,325 @@
+<div class="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 px-4 md:px-16 py-10">
+
+  <!-- SUCCESS TOAST -->
+  <div
+    *ngIf="showToast"
+    class="fixed top-6 right-6 z-[9999] animate-bounce">
+
+    <div
+      class="bg-white/90 backdrop-blur-2xl border border-pink-200 shadow-2xl rounded-3xl px-6 py-4 flex items-center gap-4">
+
+      <!-- ICON -->
+      <div
+        class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-2xl shadow-lg">
+
+        ✨
+
+      </div>
+
+      <!-- TEXT -->
+      <div>
+
+        <p class="font-black text-[#6b3e38] text-lg">
+          Added To Cart
+        </p>
+
+        <p class="text-[#9b6b63] text-sm">
+          {{ toastMessage }}
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- BACK BUTTON -->
+  <button
+    (click)="goBack()"
+    class="text-[#6b3e38] font-semibold mb-6 hover:underline transition">
+
+    ← Back to Products
+
+  </button>
+
+  <!-- MAIN CARD -->
+  <div
+    class="bg-white/70 backdrop-blur-2xl border border-pink-200 rounded-[2.5rem]
+           shadow-2xl p-6 md:p-10 grid md:grid-cols-2 gap-10">
+
+    <!-- IMAGE SECTION -->
+    <div class="space-y-4">
+
+      <!-- MAIN IMAGE -->
+      <div
+        class="rounded-[2rem] overflow-hidden shadow-xl border border-pink-200
+               hover:scale-[1.02] transition duration-300">
+
+        <img
+          [src]="selectedImage || product?.imageUrl"
+          class="w-full h-[420px] object-cover"
+        />
+
+      </div>
+
+      <!-- THUMBNAILS -->
+      <div class="flex gap-3 flex-wrap">
+
+        <img
+          *ngFor="let img of product?.images"
+          [src]="img"
+          (click)="selectedImage = img"
+          class="w-20 h-20 object-cover rounded-xl border-2
+                 transition duration-300 cursor-pointer shadow-sm
+                 hover:scale-105"
+          [ngClass]="selectedImage === img
+            ? 'border-[#6b3e38]'
+            : 'border-pink-200'"
+        />
+
+      </div>
+
+    </div>
+
+    <!-- PRODUCT INFO -->
+    <div class="flex flex-col justify-center">
+
+      <!-- CATEGORY -->
+      <span
+        class="bg-pink-100 text-[#6b3e38]
+               w-fit px-4 py-1 rounded-full
+               text-sm font-semibold">
+
+        Luxury Jewelry
+
+      </span>
+
+      <!-- TITLE -->
+      <h1 class="text-4xl md:text-5xl font-black text-[#6b3e38] mt-4 leading-tight">
+
+        {{ product?.name }}
+
+      </h1>
+
+      <!-- DESCRIPTION -->
+      <p class="text-[#9b6b63] mt-4 leading-7 text-[15px]">
+
+        {{ product?.description }}
+
+      </p>
+
+      <!-- PRICE -->
+      <div class="mt-8 flex items-center gap-4 flex-wrap">
+
+        <!-- CURRENT PRICE -->
+        <span class="text-4xl font-black text-[#6b3e38]">
+
+          ₹{{ product?.price }}
+
+        </span>
+
+        <!-- OLD PRICE -->
+        <span
+          *ngIf="product?.originalPrice"
+          class="line-through text-[#c39a93] text-lg">
+
+          ₹{{ product?.originalPrice }}
+
+        </span>
+
+        <!-- DISCOUNT -->
+        <span
+          *ngIf="product?.discount"
+          class="bg-pink-200 text-[#6b3e38]
+                 px-4 py-1 rounded-full
+                 text-sm font-bold shadow-sm">
+
+          {{ product?.discount }}% OFF
+
+        </span>
+
+      </div>
+
+      <!-- QUANTITY -->
+      <div class="mt-8 flex items-center gap-4">
+
+        <!-- MINUS -->
+        <button
+          (click)="decreaseQty()"
+          class="w-11 h-11 rounded-xl
+                 bg-pink-100 text-[#6b3e38]
+                 font-bold text-xl
+                 hover:scale-105
+                 transition duration-300 shadow">
+
+          -
+
+        </button>
+
+        <!-- QTY -->
+        <span
+          class="text-xl font-bold text-[#6b3e38]
+                 min-w-[40px] text-center">
+
+          {{ qty }}
+
+        </span>
+
+        <!-- PLUS -->
+        <button
+          (click)="increaseQty()"
+          class="w-11 h-11 rounded-xl
+                 bg-pink-100 text-[#6b3e38]
+                 font-bold text-xl
+                 hover:scale-105
+                 transition duration-300 shadow">
+
+          +
+
+        </button>
+
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="mt-10 flex gap-4">
+
+        <!-- ADD TO CART -->
+        <button
+          (click)="addToCart(product)"
+          [disabled]="isLoading"
+          class="flex-1 bg-[#6b3e38]
+                 hover:bg-[#7d4a43]
+                 text-pink-100 py-4 rounded-2xl
+                 font-bold tracking-wide
+                 hover:scale-[1.02]
+                 active:scale-95
+                 transition duration-300 shadow-xl
+                 disabled:opacity-70 disabled:cursor-not-allowed">
+
+          <!-- NORMAL -->
+          <span
+            *ngIf="!isLoading"
+            class="flex items-center justify-center gap-2">
+
+            🛒 Add To Cart
+
+          </span>
+
+          <!-- LOADING -->
+          <span
+            *ngIf="isLoading"
+            class="flex items-center justify-center gap-3">
+
+            <span
+              class="w-5 h-5 border-2 border-pink-100 border-t-transparent rounded-full animate-spin">
+            </span>
+
+            Adding...
+
+          </span>
+
+        </button>
+
+        <!-- WISHLIST -->
+        <button
+          (click)="toggleWishlist(product)"
+          class="w-14 h-14 rounded-2xl
+                 bg-pink-100 border border-pink-200
+                 flex items-center justify-center
+                 hover:bg-pink-200
+                 hover:scale-110
+                 active:scale-95
+                 transition duration-300 shadow text-2xl">
+
+          ❤️
+
+        </button>
+
+      </div>
+
+      <!-- FEATURES -->
+      <div class="mt-10 space-y-3 text-[#9b6b63]">
+
+        <p class="flex items-center gap-2">
+          ✔ Premium quality materials
+        </p>
+
+        <p class="flex items-center gap-2">
+          ✔ 100% certified jewelry
+        </p>
+
+        <p class="flex items-center gap-2">
+          ✔ Free delivery & easy returns
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- RELATED PRODUCTS -->
+  <div class="mt-16">
+
+    <h2 class="text-3xl font-black text-[#6b3e38] mb-8">
+
+      You May Also Like
+
+    </h2>
+
+    <!-- GRID -->
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+      <!-- CARD -->
+      <div
+        *ngFor="let r of relatedProducts"
+        (click)="viewProduct(r.id)"
+        class="bg-white/70 border border-pink-200
+               rounded-2xl overflow-hidden
+               shadow-lg hover:shadow-2xl
+               hover:-translate-y-2
+               hover:scale-[1.02]
+               transition duration-300 cursor-pointer">
+
+        <!-- IMAGE -->
+        <div class="overflow-hidden">
+
+          <img
+            class="h-56 w-full object-cover hover:scale-110 transition duration-500"
+            [src]="r.imageUrl"
+          />
+
+        </div>
+
+        <!-- CONTENT -->
+        <div class="p-5">
+
+          <p class="font-bold text-[#6b3e38] text-lg">
+
+            {{ r.name }}
+
+          </p>
+
+          <p class="text-[#9b6b63] mt-1">
+
+            ₹{{ r.price }}
+
+          </p>
+
+          <button
+            (click)="addToCart(r); $event.stopPropagation()"
+            class="mt-4 w-full bg-[#6b3e38] text-pink-100 py-3 rounded-2xl hover:scale-105 transition">
+
+            Add To Cart
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,84 @@
+<div class="h-screen flex flex-col overflow-hidden bg-gradient-to-br from-pink-100 via-rose-100 to-pink-50 relative">
+
+  <!-- BACKGROUND BLUR -->
+  <div
+    class="absolute top-0 left-0 w-80 h-80 bg-pink-300/20 rounded-full blur-3xl"
+  ></div>
+
+  <div
+    class="absolute bottom-0 right-0 w-80 h-80 bg-rose-300/20 rounded-full blur-3xl"
+  ></div>
+
+  <!-- HEADER -->
+  <app-header></app-header>
+
+  <!-- MAIN -->
+  <div class="flex-1 p-3 md:p-5 overflow-hidden relative z-10">
+
+    <!-- CONTENT CONTAINER -->
+    <main
+      class="h-full overflow-y-auto rounded-[2rem] bg-white/60 backdrop-blur-2xl border border-pink-200 shadow-2xl p-4 md:p-7 animate-[fadeIn_0.5s_ease]"
+    >
+
+      <!-- TOP WELCOME SECTION -->
+      <div
+        class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 mb-8"
+      >
+
+        <!-- LEFT -->
+        <div class="animate-[slideInLeft_0.5s_ease]">
+
+          <!-- SMALL BADGE -->
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-100 border border-pink-200 text-[#6b3e38] text-sm font-medium shadow-sm"
+          >
+
+            <div class="w-2 h-2 rounded-full bg-[#6b3e38] animate-pulse"></div>
+
+            Jewelry Dashboard
+
+          </div>
+
+          <!-- TITLE -->
+          <h1
+            class="mt-5 text-4xl md:text-5xl font-black leading-tight text-[#6b3e38]"
+          >
+            Welcome to
+            <span class="text-pink-500">
+              Aurevia
+            </span>
+          </h1>
+
+          <!-- SUBTEXT -->
+          <p class="mt-4 text-[#9b6b63] max-w-2xl leading-7">
+
+            Explore premium jewelry collections, manage products,
+            and create a beautiful luxury shopping experience.
+
+          </p>
+
+        </div>
+
+        <!-- BUTTON -->
+        <button
+          class="bg-[#6b3e38] hover:bg-[#7d4a43] text-pink-100 px-7 py-4 rounded-2xl shadow-lg hover:scale-105 active:scale-95 transition duration-300 font-bold"
+        >
+          Explore Collection
+        </button>
+
+      </div>
+
+      <!-- ROUTER CONTAINER -->
+      <div
+        class="rounded-[2rem] bg-white/70 border border-pink-100 shadow-lg min-h-[75vh] p-4 md:p-6 backdrop-blur-xl animate-[fadeIn_0.8s_ease]"
+      >
+
+        <router-outlet></router-outlet>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</div>
