@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
@@ -11,7 +11,7 @@ import { WishlistService } from '../../services/wishlist.service';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
@@ -49,6 +49,41 @@ export class DashboardComponent {
     }
   ];
 
+  ngOnInit(): void {
+    // Load cart state on page load
+    this.cartService.getCartItems().subscribe({
+      next: (res: any) => {
+        const cartItems = res.data;
+        this.products.forEach(product => {
+          const cartItem = cartItems.find(
+            (cart: any) => cart.productId === product.id
+          );
+          if (cartItem) {
+            product.cartId = cartItem.id;
+            product.quantity = cartItem.quantity;
+          }
+        });
+        this.cdr.detectChanges();
+      }
+    });
+
+    // Load wishlist state on page load
+    this.wishlistService.getWishlistItems().subscribe({
+      next: (res: any) => {
+        const wishlistItems = res.data;
+        this.products.forEach(product => {
+          const wishlistItem = wishlistItems.find(
+            (w: any) => w.productId === product.id
+          );
+          if (wishlistItem) {
+            product.wishlistId = wishlistItem.id;
+          }
+        });
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
   addToCart(product: any) {
     const cartItem = {
       productId: product.id,
@@ -63,7 +98,6 @@ export class DashboardComponent {
         product.cartId = res.data.id;
         product.quantity = res.data.quantity;
         this.cdr.detectChanges();
-
         this.cartService.getCartItems().subscribe({
           next: (cartRes: any) => {
             this.cartService.updateCartCount(cartRes.data.length);
@@ -76,33 +110,7 @@ export class DashboardComponent {
 
   increaseQty(product: any) {
     const newQty = product.quantity + 1;
-    this.cartService.updateQuantity(product.cartId, newQty).subscribe({
-      next: () => {
-        product.quantity = newQty;
-        this.cdr.detectChanges();
-      },
-      error: (err) => console.error('Failed to update quantity:', err)
-    });
-  }
-
-  decreaseQty(product: any) {
-    const newQty = product.quantity - 1;
-    if (newQty <= 0) {
-      this.cartService.deleteCartItem(product.cartId).subscribe({
-        next: () => {
-          product.cartId = null;
-          product.quantity = 0;
-          this.cdr.detectChanges();
-
-          this.cartService.getCartItems().subscribe({
-            next: (cartRes: any) => {
-              this.cartService.updateCartCount(cartRes.data.length);
-            }
-          });
-        },
-        error: (err) => console.error('Failed to remove item:', err)
-      });
-    } else {
+    if (product.cartId !== null) {
       this.cartService.updateQuantity(product.cartId, newQty).subscribe({
         next: () => {
           product.quantity = newQty;
@@ -113,12 +121,46 @@ export class DashboardComponent {
     }
   }
 
+  decreaseQty(product: any) {
+    const newQty = product.quantity - 1;
+    if (product.cartId !== null) {
+      if (newQty <= 0) {
+        this.cartService.deleteCartItem(product.cartId).subscribe({
+          next: () => {
+            product.cartId = null;
+            product.quantity = 0;
+            this.cdr.detectChanges();
+            this.cartService.getCartItems().subscribe({
+              next: (cartRes: any) => {
+                this.cartService.updateCartCount(cartRes.data.length);
+              }
+            });
+          },
+          error: (err) => console.error('Failed to remove item:', err)
+        });
+      } else {
+        this.cartService.updateQuantity(product.cartId, newQty).subscribe({
+          next: () => {
+            product.quantity = newQty;
+            this.cdr.detectChanges();
+          },
+          error: (err) => console.error('Failed to update quantity:', err)
+        });
+      }
+    }
+  }
+
   toggleWishlist(product: any) {
     if (product.wishlistId) {
       this.wishlistService.deleteWishlistItem(product.wishlistId).subscribe({
         next: () => {
           product.wishlistId = null;
           this.cdr.detectChanges();
+          this.wishlistService.getWishlistItems().subscribe({
+            next: (wRes: any) => {
+              this.wishlistService.updateWishlistCount(wRes.data.length);
+            }
+          });
         },
         error: (err) => console.error('Failed to remove from wishlist:', err)
       });
@@ -129,12 +171,10 @@ export class DashboardComponent {
         price: product.price,
         imageUrl: product.imageUrl
       };
-
       this.wishlistService.addToWishlist(wishlistItem).subscribe({
         next: (res: any) => {
           product.wishlistId = res.data.id;
           this.cdr.detectChanges();
-
           this.wishlistService.getWishlistItems().subscribe({
             next: (wRes: any) => {
               this.wishlistService.updateWishlistCount(wRes.data.length);
