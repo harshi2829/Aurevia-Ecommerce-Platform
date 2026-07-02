@@ -13,7 +13,7 @@ export class WishlistService {
     private authService: AuthService
   ) { }
 
-  private baseUrl = "http://localhost:8080/wishlist";
+  private baseUrl = "https://aurevia-ecommerce-platform.onrender.com/wishlist";
 
   // LIVE WISHLIST COUNT
   wishlistCount = new BehaviorSubject<number>(0);

@@ -10,7 +10,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  private baseUrl = "http://localhost:8080";
+  private baseUrl = "https://aurevia-ecommerce-platform.onrender.com";
 
   onLog(LogData: LogData) {
     // CHANGED: removed responseType:'text' — now expects JSON

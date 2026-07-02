@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class CartService {
 
-  private baseUrl = "http://localhost:8080/cart";
+  private baseUrl = "https://aurevia-ecommerce-platform.onrender.com/cart";
   cartCount = new BehaviorSubject<number>(0);
 
   constructor(
