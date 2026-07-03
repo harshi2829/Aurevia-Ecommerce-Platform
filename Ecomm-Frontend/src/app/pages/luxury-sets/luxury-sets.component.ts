@@ -37,7 +37,7 @@ export class LuxurySetsComponent implements OnInit {
   }
 
   luxurySets: Product[] = [
-    { id:1, name:'Royal Jewelry Set', price:29999, image:'assets/images/luxury-set/ls4.jpg', cartId: null, quantity: 0, wishlistId: null },
+    { id:1, name:'Royal Jewellry Set', price:29999, image:'assets/images/luxury-set/ls4.jpg', cartId: null, quantity: 0, wishlistId: null },
     { id:2, name:'Diamond Luxury Set', price:49999, image:'assets/images/luxury-set/ls3.jpg', cartId: null, quantity: 0, wishlistId: null },
     { id:3, name:'Wedding Luxury Set', price:39999, image:'assets/images/luxury-set/ls1.jpg', cartId: null, quantity: 0, wishlistId: null },
     { id:4, name:'Gold Collection Set', price:25999, image:'assets/images/luxury-set/ls10.jpg', cartId: null, quantity: 0, wishlistId: null },

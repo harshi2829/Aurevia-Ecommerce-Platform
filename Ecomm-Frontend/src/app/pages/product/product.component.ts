@@ -70,7 +70,7 @@ export class ProductComponent implements OnInit {
       discount: 30,
 
       description:
-        'Handcrafted premium jewelry designed for elegance and timeless beauty.',
+        'Handcrafted premium jewellry designed for elegance and timeless beauty.',
 
       imageUrl:
         'https://images.unsplash.com/photo-1601121141461-9d6647bca1ed',
