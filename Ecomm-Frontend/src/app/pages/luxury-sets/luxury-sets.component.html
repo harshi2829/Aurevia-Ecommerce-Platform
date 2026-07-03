@@ -1,78 +1,80 @@
-<div class="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 p-6 md:p-10">
+<div class="min-h-screen bg-gradient-to-br 
+            from-pink-50 via-rose-50 to-pink-100 
+            p-4 md:p-6 lg:p-10">
 
   <!-- HEADER -->
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
-
+  <div class="flex flex-col md:flex-row md:items-center 
+              md:justify-between gap-3 md:gap-4 mb-6 md:mb-10">
     <div>
-      <p class="text-[#9b6b63] font-semibold tracking-[0.25em] uppercase">
+      <p class="text-[#9b6b63] font-semibold 
+                tracking-[0.15em] md:tracking-[0.25em] 
+                uppercase text-xs md:text-sm">
         Premium Collection
       </p>
-      <h1 class="text-5xl md:text-6xl font-black text-[#6b3e38] mt-2">
+      <h1 class="text-2xl md:text-5xl lg:text-6xl 
+                 font-black text-[#6b3e38] mt-1 md:mt-2">
         Luxury Sets
       </h1>
-      <p class="text-[#9b6b63] mt-3 text-lg">
+      <p class="text-[#9b6b63] mt-1 md:mt-3 
+                text-sm md:text-lg">
         Discover royal bridal and luxury jewellry combinations.
       </p>
     </div>
-
-    <!-- BACK BUTTON -->
-    <div class="flex justify-end">
+    <div class="flex justify-start md:justify-end">
       <button
         routerLink="/layout/home"
-        class="bg-[#6b3e38] text-pink-100 px-6 py-3 rounded-2xl
-               shadow-lg hover:scale-105 transition duration-300">
+        class="bg-[#6b3e38] text-pink-100 
+               px-4 py-2 md:px-6 md:py-3
+               text-sm md:text-base
+               rounded-2xl shadow-lg 
+               hover:scale-105 transition duration-300">
         ← Back To Home
       </button>
     </div>
-
   </div>
 
   <!-- PRODUCTS GRID -->
-  <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-10">
+  <div class="grid grid-cols-1 sm:grid-cols-2 
+              xl:grid-cols-3 gap-6 md:gap-10">
 
-    <!-- CARD -->
     <div
       *ngFor="let set of luxurySets"
       class="group bg-white/80 backdrop-blur-xl
              rounded-[2rem] overflow-hidden
-             border border-pink-200
-             shadow-xl hover:shadow-2xl
-             hover:-translate-y-2
+             border border-pink-200 shadow-xl 
+             hover:shadow-2xl hover:-translate-y-2
              transition duration-500">
 
       <!-- IMAGE -->
       <div class="relative overflow-hidden">
         <img
           [src]="set.image"
-          class="w-full h-[420px] object-cover
-                 group-hover:scale-110
+          class="w-full h-[220px] md:h-[320px] lg:h-[420px] 
+                 object-cover group-hover:scale-110
                  transition duration-700"
         />
         <div class="absolute top-4 left-4
                     bg-[#6b3e38] text-pink-100
-                    px-4 py-1 rounded-full
-                    text-sm font-semibold shadow-lg">
+                    px-3 py-1 rounded-full
+                    text-xs md:text-sm font-semibold shadow-lg">
           Luxury Set
         </div>
       </div>
 
       <!-- CONTENT -->
-      <div class="p-6">
-
-        <h2 class="text-2xl font-black text-[#6b3e38]
-                   group-hover:text-pink-500
-                   transition duration-300">
+      <div class="p-4 md:p-6">
+        <h2 class="text-lg md:text-2xl font-black text-[#6b3e38]
+                   group-hover:text-pink-500 transition duration-300">
           {{ set.name }}
         </h2>
-
-        <p class="text-[#9b6b63] mt-3 leading-7">
+        <p class="text-[#9b6b63] mt-2 md:mt-3 
+                  leading-6 text-sm md:text-base">
           Premium handcrafted bridal and luxury jewellry set
           designed for elegance and timeless beauty.
         </p>
-
-        <!-- PRICE -->
-        <div class="mt-5 flex items-center gap-3">
-          <p class="text-4xl font-black text-[#6b3e38]">
+        <div class="mt-4 md:mt-5 flex items-center gap-3">
+          <p class="text-2xl md:text-4xl font-black text-[#6b3e38]">
+<!--              ↑ text-2xl mobile (was text-4xl — overflowing!) -->
             ₹{{ set.price }}
           </p>
           <span class="bg-pink-100 text-[#6b3e38]
@@ -81,70 +83,55 @@
             BESTSELLER
           </span>
         </div>
-<!-- BUTTONS -->
-<div class="mt-6 flex gap-3">
 
-  <!-- ADD TO CART / QUANTITY STEPPER -->
-  <div class="flex-1">
-
-    <button
-      *ngIf="set.quantity === 0"
-      (click)="addToCart(set)"
-      class="w-full bg-[#6b3e38]
-             hover:bg-[#7d4a43]
-             text-pink-100 py-3 rounded-2xl
-             font-bold tracking-wide
-             hover:scale-105
-             active:scale-95
-             transition duration-300 shadow-lg">
-      🛒 Add To Cart
-    </button>
-
-    <div
-      *ngIf="set.quantity > 0"
-      class="w-full flex items-center justify-between
-             bg-[#6b3e38] text-pink-100
-             py-2 px-4 rounded-2xl shadow-lg">
-
-      <button
-        (click)="decreaseQty(set)"
-        class="w-8 h-8 flex items-center justify-center
-               rounded-full bg-pink-100/20 hover:bg-pink-100/40
-               font-bold text-lg transition">
-        −
-      </button>
-
-      <span class="font-semibold">{{ set.quantity }}</span>
-
-      <button
-        (click)="increaseQty(set)"
-        class="w-8 h-8 flex items-center justify-center
-               rounded-full bg-pink-100/20 hover:bg-pink-100/40
-               font-bold text-lg transition">
-        +
-      </button>
-
-    </div>
-
-  </div>
-
-  <!-- WISHLIST -->
-  <button
-    (click)="toggleWishlist(set)"
-    class="px-5 rounded-2xl border border-pink-200
-           hover:bg-pink-200 transition duration-300
-           flex items-center justify-center text-xl"
-    [class.bg-pink-100]="!set.wishlistId"
-    [class.bg-pink-300]="set.wishlistId">
-    {{ set.wishlistId ? '❤️' : '🤍' }}
-  </button>
-
-</div>
-
+        <!-- BUTTONS -->
+        <div class="mt-4 md:mt-6 flex gap-3">
+          <div class="flex-1">
+            <button
+              *ngIf="set.quantity === 0"
+              (click)="addToCart(set)"
+              class="w-full bg-[#6b3e38] hover:bg-[#7d4a43]
+                     text-pink-100 py-2 md:py-3 
+                     text-sm md:text-base
+                     rounded-2xl font-bold
+                     hover:scale-105 active:scale-95
+                     transition duration-300 shadow-lg">
+              🛒 Add To Cart
+            </button>
+            <div
+              *ngIf="set.quantity > 0"
+              class="w-full flex items-center justify-between
+                     bg-[#6b3e38] text-pink-100
+                     py-2 px-3 md:px-4 rounded-2xl shadow-lg">
+              <button (click)="decreaseQty(set)"
+                class="w-7 h-7 md:w-8 md:h-8 flex items-center 
+                       justify-center rounded-full bg-pink-100/20 
+                       hover:bg-pink-100/40 font-bold text-lg transition">
+                −
+              </button>
+              <span class="font-semibold text-sm md:text-base">
+                {{ set.quantity }}
+              </span>
+              <button (click)="increaseQty(set)"
+                class="w-7 h-7 md:w-8 md:h-8 flex items-center 
+                       justify-center rounded-full bg-pink-100/20 
+                       hover:bg-pink-100/40 font-bold text-lg transition">
+                +
+              </button>
+            </div>
+          </div>
+          <button
+            (click)="toggleWishlist(set)"
+            class="w-12 md:w-14 rounded-2xl border border-pink-200
+                   hover:bg-pink-200 transition duration-300
+                   flex items-center justify-center 
+                   text-lg md:text-xl"
+            [class.bg-pink-100]="!set.wishlistId"
+            [class.bg-pink-300]="set.wishlistId">
+            {{ set.wishlistId ? '❤️' : '🤍' }}
+          </button>
+        </div>
       </div>
-
     </div>
-
   </div>
-
 </div>

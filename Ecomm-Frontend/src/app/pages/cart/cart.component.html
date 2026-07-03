@@ -1,6 +1,8 @@
 <!-- TOAST -->
 <div *ngIf="showToast"
-     class="fixed top-5 right-5 px-6 py-3 rounded-2xl shadow-xl text-white font-semibold z-[100] transition-all duration-300"
+     class="fixed top-5 right-5 px-6 py-3 rounded-2xl 
+            shadow-xl text-white font-semibold z-[100] 
+            transition-all duration-300"
      [ngClass]="{
        'bg-green-500': toastType === 'success',
        'bg-red-500': toastType === 'error'
@@ -8,200 +10,185 @@
   {{ toastMessage }}
 </div>
 
-<div class="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 px-4 md:px-16 py-10">
+<div class="min-h-screen bg-gradient-to-br 
+            from-pink-50 via-rose-50 to-pink-100 
+            px-4 md:px-16 py-6 md:py-10">
 
   <!-- TITLE -->
-  <div class="mb-10">
-    <div class="mb-10 flex items-center justify-between">
-
-  <div>
-    <h1 class="text-4xl md:text-5xl font-black text-[#6b3e38]">
-      Shopping Cart
-    </h1>
-    <p class="mt-2 text-[#9b6b63]">
-      Review your selected jewellry items
-    </p>
-  </div>
-
-  <button
-    *ngIf="cartItems.length > 0"
-    (click)="clearCart()"
-    class="bg-red-100 hover:bg-red-200 text-red-600 px-6 py-3 rounded-2xl font-semibold transition">
-    Clear Cart
-  </button>
-
-</div>
-
+  <div class="mb-6 md:mb-10">
+    <div class="flex items-center justify-between gap-3">
+      <div>
+        <h1 class="text-2xl md:text-4xl lg:text-5xl 
+                   font-black text-[#6b3e38]">
+<!--              ↑ text-2xl mobile (was text-4xl) -->
+          Shopping Cart
+        </h1>
+        <p class="mt-1 md:mt-2 text-[#9b6b63] 
+                  text-sm md:text-base">
+          Review your selected jewellry items
+        </p>
+      </div>
+      <button
+        *ngIf="cartItems.length > 0"
+        (click)="clearCart()"
+        class="bg-red-100 hover:bg-red-200 text-red-600 
+               px-3 py-2 md:px-6 md:py-3 
+               text-sm md:text-base
+               rounded-2xl font-semibold transition 
+               whitespace-nowrap">
+<!--              ↑ whitespace-nowrap stops button text wrapping -->
+        Clear Cart
+      </button>
+    </div>
   </div>
 
   <!-- EMPTY CART -->
   <div
     *ngIf="cartItems.length === 0"
-    class="bg-white/70 backdrop-blur-xl rounded-[2rem] border border-pink-200 p-10 text-center shadow-xl"
-  >
-
-    <div class="text-6xl mb-4">
-      🛒
-    </div>
-
-    <h2 class="text-2xl font-bold text-[#6b3e38]">
+    class="bg-white/70 backdrop-blur-xl rounded-[2rem] 
+           border border-pink-200 p-8 md:p-10 
+           text-center shadow-xl">
+    <div class="text-5xl md:text-6xl mb-4">🛒</div>
+    <h2 class="text-xl md:text-2xl font-bold text-[#6b3e38]">
       Your Cart Is Empty
     </h2>
-
-    <p class="mt-3 text-[#9b6b63]">
+    <p class="mt-3 text-[#9b6b63] text-sm md:text-base">
       Add beautiful jewellry products to continue shopping.
     </p>
     <button
-  routerLink="/layout/home"
-  class="mt-6 bg-[#6b3e38] text-pink-100
-         px-8 py-3 rounded-2xl font-bold
-         hover:bg-[#7d4a43] transition">
-  Start Shopping
-</button>
-
+      routerLink="/layout/home"
+      class="mt-6 bg-[#6b3e38] text-pink-100
+             px-6 md:px-8 py-3 rounded-2xl font-bold
+             hover:bg-[#7d4a43] transition">
+      Start Shopping
+    </button>
   </div>
 
   <!-- CART CONTENT -->
   <div
-    *ngIf="cartItems.length > 0;"
-    class="grid lg:grid-cols-3 gap-8"
-  >
+    *ngIf="cartItems.length > 0"
+    class="grid lg:grid-cols-3 gap-6 md:gap-8">
 
-    <!-- LEFT SIDE -->
-    <div class="lg:col-span-2 space-y-6">
+    <!-- LEFT SIDE — CART ITEMS -->
+    <div class="lg:col-span-2 space-y-4 md:space-y-6">
 
-      <!-- CART ITEM -->
       <div
         *ngFor="let item of cartItems"
-        class="bg-white/70 backdrop-blur-xl border border-pink-200 rounded-[2rem] p-5 shadow-xl flex flex-col md:flex-row gap-5 hover:scale-[1.01] transition duration-300"
-      >
+        class="bg-white/70 backdrop-blur-xl border 
+               border-pink-200 rounded-[2rem] 
+               p-4 md:p-5 shadow-xl 
+               flex flex-row gap-3 md:gap-5 
+               hover:scale-[1.01] transition duration-300">
+<!--              ↑ flex-row always (image left, info right) -->
 
         <!-- IMAGE -->
-        <div class="w-full md:w-40 h-40 overflow-hidden rounded-2xl">
-
+        <div class="w-24 h-24 md:w-40 md:h-40 
+                    flex-shrink-0 overflow-hidden rounded-2xl">
+<!--              ↑ w-24 mobile, w-40 desktop -->
+<!--                ↑ flex-shrink-0 stops image from squishing -->
           <img
             [src]="item.imageUrl"
             class="w-full h-full object-cover"
           />
-
         </div>
 
         <!-- INFO -->
-        <div class="flex-1 flex flex-col justify-between">
+        <div class="flex-1 flex flex-col justify-between 
+                    min-w-0">
+<!--                  ↑ min-w-0 prevents text overflow -->
 
           <div>
-
-            <h2 class="text-2xl font-bold text-[#6b3e38]">
+            <h2 class="text-base md:text-2xl font-bold 
+                       text-[#6b3e38] truncate md:whitespace-normal">
+<!--                  ↑ truncate on mobile if name too long -->
               {{ item.productName }}
             </h2>
-
-            <p class="mt-2 text-[#9b6b63]">
+            <p class="mt-1 md:mt-2 text-[#9b6b63] 
+                      text-xs md:text-base">
               Premium handcrafted jewellry item
             </p>
-
           </div>
 
           <!-- PRICE + QTY -->
-          <div class="mt-5 flex items-center justify-between">
-
+          <div class="mt-3 md:mt-5 flex items-center 
+                      justify-between gap-2">
             <div>
-
-              <p class="text-[#9b6b63] text-sm">
+              <p class="text-[#9b6b63] text-xs md:text-sm">
                 Quantity
               </p>
-
-              <p class="font-bold text-[#6b3e38] text-lg">
+              <p class="font-bold text-[#6b3e38] 
+                        text-sm md:text-lg">
                 {{ item.quantity }}
               </p>
-
             </div>
-
             <div>
-
-              <p class="text-[#9b6b63] text-sm">
+              <p class="text-[#9b6b63] text-xs md:text-sm">
                 Price
               </p>
-
-              <p class="font-bold text-[#6b3e38] text-2xl">
+              <p class="font-bold text-[#6b3e38] 
+                        text-lg md:text-2xl">
                 ₹{{ item.price }}
               </p>
-
             </div>
-
           </div>
 
         </div>
 
         <!-- REMOVE BUTTON -->
-        <div class="flex items-start">
-
+        <div class="flex items-start flex-shrink-0">
           <button
             (click)="removeItem(item.id)"
-            class="bg-red-100 hover:bg-red-200 text-red-600 px-5 py-3 rounded-2xl font-semibold transition"
-          >
+            class="bg-red-100 hover:bg-red-200 text-red-600 
+                   px-3 py-2 md:px-5 md:py-3 
+                   text-xs md:text-sm
+                   rounded-2xl font-semibold transition">
             Remove
           </button>
-
         </div>
 
       </div>
-
     </div>
 
-    <!-- RIGHT SIDE -->
+    <!-- RIGHT SIDE — ORDER SUMMARY -->
     <div>
+      <div class="bg-white/70 backdrop-blur-xl border 
+                  border-pink-200 rounded-[2rem] 
+                  p-6 md:p-8 shadow-2xl sticky top-10">
 
-      <div
-        class="bg-white/70 backdrop-blur-xl border border-pink-200 rounded-[2rem] p-8 shadow-2xl sticky top-10"
-      >
-
-        <h2 class="text-3xl font-black text-[#6b3e38]">
+        <h2 class="text-2xl md:text-3xl font-black text-[#6b3e38]">
           Order Summary
         </h2>
 
-        <!-- TOTAL -->
-        <div class="mt-8 space-y-4">
-
+        <div class="mt-6 md:mt-8 space-y-4">
           <div class="flex justify-between text-[#9b6b63]">
-
             <span>Items</span>
-<span>{{ totalQuantity }}</span>
-
+            <span>{{ totalQuantity }}</span>
           </div>
-
           <div class="flex justify-between text-[#9b6b63]">
-
             <span>Shipping</span>
-
             <span>Free</span>
-
           </div>
-
-          <div class="border-t border-pink-200 pt-4 flex justify-between">
-
-            <span class="text-xl font-bold text-[#6b3e38]">
+          <div class="border-t border-pink-200 pt-4 
+                      flex justify-between">
+            <span class="text-lg md:text-xl font-bold text-[#6b3e38]">
               Total
             </span>
-
-            <span class="text-3xl font-black text-[#6b3e38]">
+            <span class="text-2xl md:text-3xl font-black text-[#6b3e38]">
               ₹{{ totalAmount }}
             </span>
-
           </div>
-
         </div>
 
-        <!-- CHECKOUT BUTTON -->
         <button
-          class="mt-8 w-full bg-[#6b3e38] hover:bg-[#7d4a43] text-pink-100 py-4 rounded-2xl font-bold shadow-lg hover:scale-[1.02] active:scale-95 transition duration-300"
-        >
+          class="mt-6 md:mt-8 w-full bg-[#6b3e38] 
+                 hover:bg-[#7d4a43] text-pink-100 
+                 py-3 md:py-4 rounded-2xl font-bold 
+                 shadow-lg hover:scale-[1.02] 
+                 active:scale-95 transition duration-300">
           Proceed To Checkout
         </button>
 
       </div>
-
     </div>
-
   </div>
-
 </div>

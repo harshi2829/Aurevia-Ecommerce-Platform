@@ -1,33 +1,38 @@
-<div class="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 p-6 md:p-10">
+<div class="min-h-screen bg-gradient-to-br 
+            from-pink-50 via-rose-50 to-pink-100 
+            p-4 md:p-6 lg:p-10">
 
   <!-- TOP -->
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
-
+  <div class="flex flex-col md:flex-row md:items-center 
+              md:justify-between gap-3 md:gap-4 mb-6 md:mb-10">
     <div>
-      <h1 class="text-4xl md:text-5xl font-black text-[#6b3e38]">
+      <h1 class="text-2xl md:text-4xl lg:text-5xl 
+                 font-black text-[#6b3e38]">
         Earrings Collection
       </h1>
-      <p class="text-[#9b6b63] mt-2 text-lg">
-        Elegant diamond, gold & silver earrings crafted for luxury.
+      <p class="text-[#9b6b63] mt-1 md:mt-2 
+                text-sm md:text-lg">
+        Elegant diamond, gold & silver earrings 
+        crafted for luxury.
       </p>
     </div>
-
-    <!-- BACK BUTTON -->
-    <div class="flex justify-end">
+    <div class="flex justify-start md:justify-end">
       <button
         routerLink="/layout/home"
-        class="bg-[#6b3e38] text-pink-100 px-6 py-3 rounded-2xl
-               shadow-lg hover:scale-105 transition duration-300">
+        class="bg-[#6b3e38] text-pink-100 
+               px-4 py-2 md:px-6 md:py-3
+               text-sm md:text-base
+               rounded-2xl shadow-lg 
+               hover:scale-105 transition duration-300">
         ← Back To Home
       </button>
     </div>
-
   </div>
 
   <!-- GRID -->
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+  <div class="grid grid-cols-1 sm:grid-cols-2 
+              lg:grid-cols-3 gap-6 md:gap-10">
 
-    <!-- CARD -->
     <div
       *ngFor="let earring of earrings"
       class="group bg-white/80 backdrop-blur-xl rounded-[2rem]
@@ -39,98 +44,85 @@
       <div class="overflow-hidden relative">
         <img
           [src]="earring.image"
-          class="h-[420px] w-full object-cover group-hover:scale-110 transition duration-700"
+          class="h-[220px] md:h-[320px] lg:h-[420px] 
+                 w-full object-cover 
+                 group-hover:scale-110 transition duration-700"
         />
         <div class="absolute top-4 left-4 bg-[#6b3e38]
-                    text-pink-100 px-4 py-1 rounded-full
-                    text-sm font-semibold shadow-lg">
+                    text-pink-100 px-3 py-1 rounded-full
+                    text-xs md:text-sm font-semibold shadow-lg">
           Premium
         </div>
       </div>
 
       <!-- CONTENT -->
-      <div class="p-6">
-
-        <h2 class="text-2xl font-black text-[#6b3e38]">
+      <div class="p-4 md:p-6">
+        <h2 class="text-lg md:text-2xl font-black text-[#6b3e38]">
           {{ earring.name }}
         </h2>
-
-        <p class="text-[#9b6b63] mt-3 leading-7">
-          Luxury handcrafted earrings designed with elegance and timeless beauty.
+        <p class="text-[#9b6b63] mt-2 md:mt-3 
+                  leading-6 text-sm md:text-base">
+          Luxury handcrafted earrings designed with 
+          elegance and timeless beauty.
         </p>
-
-        <!-- PRICE -->
-        <div class="mt-5 flex items-center justify-between">
-          <p class="text-3xl font-black text-[#6b3e38]">
+        <div class="mt-4 md:mt-5 flex items-center justify-between">
+          <p class="text-xl md:text-3xl font-black text-[#6b3e38]">
             ₹{{ earring.price }}
           </p>
           <div class="bg-pink-100 text-[#6b3e38]
-                      px-3 py-1 rounded-full text-sm font-bold">
+                      px-3 py-1 rounded-full
+                      text-xs md:text-sm font-bold">
             Bestseller
           </div>
         </div>
 
         <!-- BUTTONS -->
-        <div class="mt-6 flex gap-3">
-
-          <!-- ADD TO CART / QUANTITY STEPPER -->
+        <div class="mt-4 md:mt-6 flex gap-3">
           <div class="flex-1">
-
             <button
               *ngIf="earring.quantity === 0"
               (click)="addToCart(earring)"
-              class="w-full bg-[#6b3e38]
-                     text-pink-100 py-3 rounded-2xl
-                     font-semibold hover:bg-[#7d4a43]
-                     hover:scale-105 transition duration-300 shadow-lg">
+              class="w-full bg-[#6b3e38] text-pink-100 
+                     py-2 md:py-3 text-sm md:text-base
+                     rounded-2xl font-semibold 
+                     hover:bg-[#7d4a43] hover:scale-105 
+                     transition duration-300 shadow-lg">
               Add To Cart
             </button>
-
             <div
               *ngIf="earring.quantity > 0"
               class="w-full flex items-center justify-between
                      bg-[#6b3e38] text-pink-100
-                     py-2 px-4 rounded-2xl shadow-lg">
-
-              <button
-                (click)="decreaseQty(earring)"
-                class="w-8 h-8 flex items-center justify-center
-                       rounded-full bg-pink-100/20 hover:bg-pink-100/40
-                       font-bold text-lg transition">
+                     py-2 px-3 md:px-4 rounded-2xl shadow-lg">
+              <button (click)="decreaseQty(earring)"
+                class="w-7 h-7 md:w-8 md:h-8 flex items-center 
+                       justify-center rounded-full bg-pink-100/20 
+                       hover:bg-pink-100/40 font-bold text-lg transition">
                 −
               </button>
-
-              <span class="font-semibold">{{ earring.quantity }}</span>
-
-              <button
-                (click)="increaseQty(earring)"
-                class="w-8 h-8 flex items-center justify-center
-                       rounded-full bg-pink-100/20 hover:bg-pink-100/40
-                       font-bold text-lg transition">
+              <span class="font-semibold text-sm md:text-base">
+                {{ earring.quantity }}
+              </span>
+              <button (click)="increaseQty(earring)"
+                class="w-7 h-7 md:w-8 md:h-8 flex items-center 
+                       justify-center rounded-full bg-pink-100/20 
+                       hover:bg-pink-100/40 font-bold text-lg transition">
                 +
               </button>
-
             </div>
-
           </div>
-
-          <!-- WISHLIST -->
           <button
             (click)="toggleWishlist(earring)"
-            class="w-14 rounded-2xl border border-pink-200
+            class="w-12 md:w-14 rounded-2xl border border-pink-200
                    hover:bg-pink-200 transition
-                   flex items-center justify-center text-xl"
+                   flex items-center justify-center 
+                   text-lg md:text-xl"
             [class.bg-pink-100]="!earring.wishlistId"
             [class.bg-pink-300]="earring.wishlistId">
             {{ earring.wishlistId ? '❤️' : '🤍' }}
           </button>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </div>
