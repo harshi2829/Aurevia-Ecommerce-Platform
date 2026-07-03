@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
       id: 2,
       name: 'Diamond Necklace',
       price: 12999,
-      imageUrl: 'https://images.unsplash.com/photo-1611652022419-a9419f74343d',
+      imageUrl: 'assets/images/home-cover/necklacee.jpeg',
       cartId: null as number | null,
       quantity: 0,
       wishlistId: null as number | null
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
       id: 3,
       name: 'Pearl Earrings',
       price: 4999,
-      imageUrl: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f',
+      imageUrl: 'assets/images/home-cover/earrings.jpeg',
       cartId: null as number | null,
       quantity: 0,
       wishlistId: null as number | null
